@@ -1,22 +1,26 @@
 import datetime
 
 import jwt
+from django_filters import rest_framework as filters
 from rest_framework import status, viewsets, permissions
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from api.filters import UsersFilter
 from api.tasks import send_email
 from manufacture.settings import (EMAIL_HOST_USER, JWT_REGISTRATION_TTL,
                                   SECRET_KEY, SITE_NAME)
 from users.models import CustomUser
-from users.serializers import (CustomUserCreateSerializer, UserSerializer,
-                               LoginSerializer)
+from api.serializers.users import (CustomUserCreateSerializer, UserSerializer,
+                                   LoginSerializer)
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all().order_by('username')
     serializer_class = UserSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated, )
+    filter_backends = (filters.DjangoFilterBackend, )
+    filterset_class = UsersFilter
 
 
 @api_view(['POST'])
