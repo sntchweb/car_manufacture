@@ -1,8 +1,7 @@
 from django.db.models import Q
-
 from django_filters import rest_framework as filters
 
-from cars.models import CarBody, Components, Car
+from cars.models import Car, Components
 from users.models import CustomUser
 
 
@@ -44,7 +43,7 @@ class ComponentsFilter(filters.FilterSet):
         )
 
 
-class CarFilter(filters.FilterSet):
+class CarsFilter(filters.FilterSet):
     employee_first_name = filters.CharFilter(
         field_name='employee__first_name',
         lookup_expr='istartswith',
@@ -65,8 +64,12 @@ class CarFilter(filters.FilterSet):
         field_name='creation_date',
         lookup_expr='year__lte',
     )
-    car_body = filters.CharFilter(
+    body_type = filters.CharFilter(
         field_name='car_body__type',
+        lookup_expr='istartswith',
+    )
+    color = filters.CharFilter(
+        field_name='car_body__color',
         lookup_expr='istartswith',
     )
 
@@ -78,4 +81,6 @@ class CarFilter(filters.FilterSet):
             'creation_date',
             'creation_date_gt',
             'creation_date_lt',
+            'car_body',
+            'color',
         )

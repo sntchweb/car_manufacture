@@ -1,12 +1,14 @@
-from rest_framework import status, viewsets, permissions
 from django_filters import rest_framework as filters
+from rest_framework import permissions, viewsets
 
-from api.filters import CarFilter
-from api.serializers.cars import CarSerializer
-from cars.models import Car
+from api.filters import CarsFilter
+from api.serializers.cars import CarSerializer, ComponentsSerializer
+from cars.models import Car, Components
 
 
 class CarsViewSet(viewsets.ModelViewSet):
+    """Представление автомобилей."""
+
     queryset = Car.objects.select_related(
         'employee',
         'car_body',
@@ -16,4 +18,12 @@ class CarsViewSet(viewsets.ModelViewSet):
     serializer_class = CarSerializer
     # permission_classes = (permissions.IsAuthenticated, )
     filter_backends = (filters.DjangoFilterBackend,)
-    filterset_class = CarFilter
+    filterset_class = CarsFilter
+
+
+class ComponentsViewSet(viewsets.ModelViewSet):
+    """Представление деталей."""
+
+    queryset = Components.objects.all()
+    serializer_class = ComponentsSerializer
+    filter_backends = (filters.DjangoFilterBackend, )

@@ -23,9 +23,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'django_filters',
-    "debug_toolbar",
-    # 'rest_framework.authtoken',
-    # 'djoser',
+    'debug_toolbar',
 
     'api',
     'cars',
@@ -40,7 +38,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'manufacture.urls'
@@ -62,24 +60,10 @@ TEMPLATES = [
 ]
 
 INTERNAL_IPS = [
-    "127.0.0.1",
+    '127.0.0.1',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
-
-# DJOSER = {
-#     'LOGIN_FIELD': 'email',
-#     'HIDE_USERS': False,
-#     'SERIALIZERS': {
-#         'user': 'users.serializers.UserSerializer',
-#         'current_user': 'users.serializers.UserSerializer',
-#         'user_create': 'users.serializers.UserRegistrationSerializer'
-#     },
-#     'PERMISSIONS': {
-#         'user': ('rest_framework.permissions.IsAuthenticatedOrReadOnly',),
-#         'user_list': ('rest_framework.permissions.IsAuthenticatedOrReadOnly',)
-#     }
-# }
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',

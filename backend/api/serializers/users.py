@@ -4,7 +4,7 @@ import jwt
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 
-from manufacture.settings import SECRET_KEY, JWT_ACCESS_TTL
+from manufacture.settings import JWT_ACCESS_TTL, SECRET_KEY
 from users.models import CustomUser
 
 AUTHENTICATION_ERROR_MESSAGE = 'email или пароль введены неверно'
@@ -54,10 +54,9 @@ class LoginSerializer(serializers.Serializer):
         access_payload = {
             'iss': 'backend-api',
             'user_id': user_id,
-            'exp': datetime.datetime.now(
-                tz=datetime.timezone.utc) + datetime.timedelta(
-                seconds=JWT_ACCESS_TTL),
-            'type': 'access'
+            'exp': datetime.datetime.now(tz=datetime.timezone.utc)
+            + datetime.timedelta(seconds=JWT_ACCESS_TTL),
+            'type': 'access',
         }
         access = jwt.encode(access_payload, SECRET_KEY)
         return {'access': access}

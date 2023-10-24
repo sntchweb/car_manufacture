@@ -16,9 +16,11 @@ from api.serializers.users import (CustomUserCreateSerializer, UserSerializer,
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    """Представление пользователей."""
+
     queryset = CustomUser.objects.all().order_by('username')
     serializer_class = UserSerializer
-    permission_classes = (permissions.IsAuthenticated, )
+    # permission_classes = (permissions.IsAuthenticated, )
     filter_backends = (filters.DjangoFilterBackend, )
     filterset_class = UsersFilter
 
