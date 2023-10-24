@@ -65,6 +65,10 @@ class CarFilter(filters.FilterSet):
         field_name='creation_date',
         lookup_expr='year__lte',
     )
+    car_body = filters.CharFilter(
+        field_name='car_body__type',
+        lookup_expr='istartswith',
+    )
 
     class Meta:
         model = Car
@@ -75,23 +79,3 @@ class CarFilter(filters.FilterSet):
             'creation_date_gt',
             'creation_date_lt',
         )
-    # body = filters.CharFilter(
-    #     method='get_body',
-    # )
-    # components = filters.CharFilter(
-    #     method='get_components',
-    # )
-
-    # class Meta:
-    #     model = Car
-    #     fields = ('body', 'components')
-
-    # def get_body(self, qs, name, value):
-    #     return qs.filter(
-    #         Q(body__istartswith=value) | Q(body__icontains=value)
-    #     )
-
-    # def get_components(self, qs, name, value):
-    #     return qs.filter(
-    #         Q(components__istartswith=value) | Q(components__icontains=value)
-    #     )

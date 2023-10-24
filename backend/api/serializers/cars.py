@@ -43,17 +43,23 @@ class CarSerializer(serializers.ModelSerializer):
 
     employee = UserSerializer(read_only=True)
     car_body = CarBodySerializer(read_only=True)
+    creation_date = serializers.SerializerMethodField(
+        source='get_creation_date',
+    )
     components = ComponentsInCarSerializer(
         many=True,
         read_only=True,
-        source='car'
+        source='car',
     )
 
     class Meta:
         model = Car
         fields = (
-            'employee',
             'car_body',
             'creation_date',
             'components',
+            'employee',
         )
+
+    def get_creation_date(self, obj):
+        return obj.creation_date.strftime('%Y-%m-%d')

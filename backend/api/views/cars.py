@@ -7,11 +7,13 @@ from cars.models import Car
 
 
 class CarsViewSet(viewsets.ModelViewSet):
-    queryset = Car.objects.all().select_related(
+    queryset = Car.objects.select_related(
         'employee',
-        'car_body'
+        'car_body',
+    ).prefetch_related(
+        'сomponents',
     )
     serializer_class = CarSerializer
-    permission_classes = (permissions.IsAuthenticated, )
-    filter_backends = (filters.DjangoFilterBackend, )
+    # permission_classes = (permissions.IsAuthenticated, )
+    filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = CarFilter
