@@ -1,3 +1,5 @@
+import uuid
+
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
@@ -21,10 +23,6 @@ class CarBody(models.Model):
     slug = models.SlugField(
         verbose_name='Слаг',
         unique=True,
-    )
-    vin_code = models.CharField(
-        verbose_name='VIN код кузова',
-        max_length=150,
     )
 
     class Meta:
@@ -62,13 +60,13 @@ class Car(models.Model):
 
     employee = models.ForeignKey(
         CustomUser,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         verbose_name='Сотрудник',
         related_name='cars',
     )
     car_body = models.ForeignKey(
         CarBody,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         verbose_name='Кузов',
         related_name='cars',
     )
@@ -80,6 +78,11 @@ class Car(models.Model):
         Components,
         verbose_name='Детали',
         through='CarComponents',
+    )
+    vin_code = models.UUIDField(
+        verbose_name='VIN код кузова',
+        default=uuid.uuid4,
+        editable=False,
     )
 
     class Meta:
@@ -96,13 +99,13 @@ class CarComponents(models.Model):
 
     car = models.ForeignKey(
         Car,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         verbose_name='Автомобиль',
         related_name='car',
     )
     component = models.ForeignKey(
         Components,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         verbose_name='Деталь',
         related_name='components',
     )

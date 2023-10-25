@@ -10,8 +10,12 @@ class CarComponentsInline(admin.TabularInline):
 
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
-    list_display = ('id', 'employee', 'car_body', 'creation_date')
+    list_display = ('id', 'vin', 'employee', 'car_body', 'creation_date')
     inlines = [CarComponentsInline]
+
+    def vin(self, obj):
+        return ''.join(str(obj.vin_code).split('-')).upper()
+    vin.short_description = 'VIN-код'
 
 
 @admin.register(Components)
@@ -21,5 +25,5 @@ class Components(admin.ModelAdmin):
 
 @admin.register(CarBody)
 class CarBodyAdmin(admin.ModelAdmin):
-    list_display = ('type', 'color', 'slug', 'vin_code')
+    list_display = ('type', 'color', 'slug')
     prepopulated_fields = {'slug': ('type',)}

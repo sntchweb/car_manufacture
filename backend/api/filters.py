@@ -6,6 +6,8 @@ from users.models import CustomUser
 
 
 class UsersFilter(filters.FilterSet):
+    """Фильтр для пользователей."""
+
     email = filters.CharFilter(method='get_email')
     username = filters.CharFilter(method='get_username')
 
@@ -25,6 +27,8 @@ class UsersFilter(filters.FilterSet):
 
 
 class ComponentsFilter(filters.FilterSet):
+    """Фильтр для деталей."""
+
     name = filters.CharFilter(
         method='get_name',
     )
@@ -44,6 +48,8 @@ class ComponentsFilter(filters.FilterSet):
 
 
 class CarsFilter(filters.FilterSet):
+    """Фильтр для автомобилей."""
+
     employee_first_name = filters.CharFilter(
         field_name='employee__first_name',
         lookup_expr='istartswith',
