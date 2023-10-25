@@ -101,13 +101,13 @@ class CarComponents(models.Model):
         Car,
         on_delete=models.PROTECT,
         verbose_name='Автомобиль',
-        related_name='car',
+        related_name='car_components',
     )
     component = models.ForeignKey(
         Components,
         on_delete=models.PROTECT,
         verbose_name='Деталь',
-        related_name='components',
+        related_name='car_components',
     )
     amount = models.PositiveSmallIntegerField(
         verbose_name='Количество деталей',

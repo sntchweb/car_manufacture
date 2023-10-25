@@ -13,7 +13,7 @@ class CarsViewSet(viewsets.ModelViewSet):
         'employee',
         'car_body',
     ).prefetch_related(
-        'сomponents',
+        'car_components',
     )
     serializer_class = CarSerializer
     # permission_classes = (permissions.IsAuthenticated, )

@@ -15,7 +15,7 @@ from api.serializers.users import (CustomUserCreateSerializer, UserSerializer,
                                    LoginSerializer)
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """Представление пользователей."""
 
     queryset = CustomUser.objects.all().order_by('username')
