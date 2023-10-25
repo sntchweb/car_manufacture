@@ -12,7 +12,6 @@ class CustomUser(AbstractBaseUser):
         max_length=150,
         null=True,
         blank=True,
-        unique=True,
     )
     first_name = models.CharField(
         verbose_name='Имя',
