@@ -1,8 +1,10 @@
 from django.core.mail import send_mail
 
+from manufacture.celery import app
 from manufacture.settings import EMAIL_HOST_USER
 
 
+@app.task()
 def send_email(
         subject,
         recipient_list,

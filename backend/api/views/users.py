@@ -56,7 +56,7 @@ def user_registration(request):
                    'перейдите по ссылке: '
                    f'{SITE_NAME}/api/v1/auth/activation/{encoded_jwt}/')
         recipient = serializer.data['email']
-        send_email(
+        send_email.delay(
             subject, [recipient], EMAIL_HOST_USER, message=message
         )
         return Response(status=status.HTTP_200_OK)

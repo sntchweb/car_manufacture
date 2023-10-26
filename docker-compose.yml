@@ -17,3 +17,21 @@ services:
     env_file: ./backend/manufacture/.env
     ports:
       - "5432:5432"
+
+  redis:
+    image: redis:7.0.5-alpine
+    hostname: redis
+
+  celery:
+    build:
+      context: /backend
+    hostname: celery
+    entrypoint: celery
+    command: -A manufacture.celery.app worker --loglevel=info
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - database
+      - redis
+    links:
+      - redis
