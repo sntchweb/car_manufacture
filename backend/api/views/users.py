@@ -30,7 +30,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
     queryset = CustomUser.objects.all().order_by('username')
     serializer_class = UserSerializer
-    # permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     filter_backends = (filters.DjangoFilterBackend, )
     filterset_class = UsersFilter
 

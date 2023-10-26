@@ -23,10 +23,20 @@ class CarsViewSet(viewsets.ReadOnlyModelViewSet):
         'employee',
         'car_body',
     ).prefetch_related(
-        'car_components',
+        'car_components__component',
+    ).only(
+        'employee__id',
+        'employee__username',
+        'employee__email',
+        'employee__first_name',
+        'employee__last_name',
+        'car_body__color',
+        'car_body__type',
+        'vin_code',
+        'creation_date',
     )
     serializer_class = CarSerializer
-    # permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = CarsFilter
 
@@ -44,6 +54,6 @@ class ComponentsViewSet(viewsets.ReadOnlyModelViewSet):
 
     queryset = Components.objects.all()
     serializer_class = ComponentsSerializer
-    # permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     filter_backends = (filters.DjangoFilterBackend, )
     filterset_class = ComponentsFilter

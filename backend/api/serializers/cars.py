@@ -21,6 +21,7 @@ class ComponentsInCarSerializer(serializers.ModelSerializer):
             'amount',
             'manufacturer_country',
         )
+        # read_only_fields = ('amount', )
 
 
 class CarBodySerializer(serializers.ModelSerializer):
@@ -48,7 +49,7 @@ class CarSerializer(serializers.ModelSerializer):
     components = ComponentsInCarSerializer(
         many=True,
         read_only=True,
-        source='car',
+        source='car_components',
     )
 
     class Meta:
