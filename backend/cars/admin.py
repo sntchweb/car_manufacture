@@ -11,6 +11,8 @@ class CarComponentsInline(admin.TabularInline):
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
     list_display = ('id', 'vin', 'employee', 'car_body', 'creation_date')
+    search_fields = ('vin', 'employee__first_name', 'employee__last_name')
+    list_filter = ('car_body', 'employee__first_name', 'employee__last_name')
     inlines = [CarComponentsInline]
 
     def vin(self, obj):
@@ -21,9 +23,12 @@ class CarAdmin(admin.ModelAdmin):
 @admin.register(Components)
 class Components(admin.ModelAdmin):
     list_display = ('name', 'manufacturer_country')
+    search_fields = ('name', 'manufacturer_country')
+    list_filter = ('name', 'manufacturer_country', )
 
 
 @admin.register(CarBody)
 class CarBodyAdmin(admin.ModelAdmin):
     list_display = ('type', 'color', 'slug')
+    search_fields = ('type', 'color')
     prepopulated_fields = {'slug': ('type',)}

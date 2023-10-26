@@ -10,7 +10,7 @@ MAX_COMPONENTS_VALUE = 32767
 
 
 class CarBody(models.Model):
-    """Модель типа кузова автомобиля."""
+    """Модель типа кузова."""
 
     type = models.CharField(
         verbose_name='Тип кузова',
@@ -35,7 +35,7 @@ class CarBody(models.Model):
 
 
 class Components(models.Model):
-    """Модель деталей автомобиля."""
+    """Модель деталей."""
 
     name = models.CharField(
         verbose_name='Деталь',

@@ -87,6 +87,6 @@ class CarsFilter(filters.FilterSet):
             'creation_date',
             'creation_date_gt',
             'creation_date_lt',
-            'car_body',
+            'body_type',
             'color',
         )
