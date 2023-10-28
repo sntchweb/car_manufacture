@@ -28,7 +28,9 @@ from users.models import CustomUser
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """Представление пользователей."""
 
-    queryset = CustomUser.objects.all().order_by('username')
+    queryset = CustomUser.objects.all().filter(
+        is_active=True
+    ).order_by('username')
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     filter_backends = (filters.DjangoFilterBackend, )
