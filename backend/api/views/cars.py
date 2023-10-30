@@ -42,12 +42,12 @@ class CarsViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 @method_decorator(name='list', decorator=swagger_auto_schema(
-    operation_description='Выдача деталей с фильтрацией',
-    tags=['Детали'],
+    operation_description='Выдача комплектующих с фильтрацией',
+    tags=['Комплектующие'],
 ))
 @method_decorator(name='retrieve', decorator=swagger_auto_schema(
-    operation_description='Выдача детали по ID',
-    tags=['Детали'],
+    operation_description='Выдача конкретной детали по ID',
+    tags=['Комплектующие'],
 ))
 class ComponentsViewSet(viewsets.ReadOnlyModelViewSet):
     """Представление деталей."""

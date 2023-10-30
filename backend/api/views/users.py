@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django_filters import rest_framework as filters
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import permissions, status, viewsets
-from rest_framework.decorators import api_view
+from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 
 from api.filters import UsersFilter
@@ -35,6 +35,19 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     filter_backends = (filters.DjangoFilterBackend, )
     filterset_class = UsersFilter
+
+    @method_decorator(name='retrieve', decorator=swagger_auto_schema(
+        operation_description='Выдача информации о залогиненом пользователе',
+        tags=['Пользователи'],
+    ))
+    @action(
+        methods=('get',),
+        detail=False,
+        permission_classes=(permissions.IsAuthenticated,)
+    )
+    def me(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
 
 
 @swagger_auto_schema(
