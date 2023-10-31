@@ -62,7 +62,7 @@ class CarSerializer(serializers.ModelSerializer):
         return obj.creation_date.strftime('%Y-%m-%d')
 
     def get_vin_code(self, obj):
-        """Возвращает VIN код автомобиля."""
+        """Возвращает VIN-код автомобиля."""
 
         return ''.join(str(obj.vin_code).split('-')).upper()
 

@@ -80,7 +80,7 @@ class Car(models.Model):
         through='CarComponents',
     )
     vin_code = models.UUIDField(
-        verbose_name='VIN код кузова',
+        verbose_name='VIN-код кузова',
         default=uuid.uuid4,
         editable=False,
     )
