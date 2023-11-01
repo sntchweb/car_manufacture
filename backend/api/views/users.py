@@ -1,6 +1,7 @@
 import datetime
 
 import jwt
+from django.db.models import Count
 from django.utils.decorators import method_decorator
 from django_filters import rest_framework as filters
 from drf_yasg.utils import swagger_auto_schema
@@ -30,7 +31,17 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
     queryset = CustomUser.objects.all().filter(
         is_active=True
-    ).order_by('username')
+    ).order_by(
+        'username'
+    ).only(
+        'id',
+        'username',
+        'email',
+        'first_name',
+        'last_name',
+    ).annotate(
+        total_cars_created=Count('cars'),
+    )
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     filter_backends = (filters.DjangoFilterBackend, )

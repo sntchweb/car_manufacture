@@ -7,7 +7,7 @@ from cars.models import Car, CarBody, CarComponents, Components
 class ComponentsInCarSerializer(serializers.ModelSerializer):
     """Сериализатор деталей автомобиля."""
 
-    name = serializers.ReadOnlyField(source='component.name')
+    component_name = serializers.ReadOnlyField(source='component.name')
     manufacturer_country = serializers.ReadOnlyField(
         source='component.manufacturer_country'
     )
@@ -15,7 +15,7 @@ class ComponentsInCarSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarComponents
         fields = (
-            'name',
+            'component_name',
             'amount',
             'manufacturer_country',
         )
@@ -45,6 +45,7 @@ class CarSerializer(serializers.ModelSerializer):
         read_only=True,
         source='car_components',
     )
+    total_components_cnt = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Car
@@ -53,6 +54,7 @@ class CarSerializer(serializers.ModelSerializer):
             'vin_code',
             'creation_date',
             'components',
+            'total_components_cnt',
             'employee',
         )
 

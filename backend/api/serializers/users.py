@@ -12,9 +12,18 @@ USER_DOES_NOT_EXISTS_MESSAGE = 'Пользователя с таким email н�
 
 
 class UserSerializer(serializers.ModelSerializer):
+    total_cars_created = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'email', 'first_name', 'last_name')
+        fields = (
+            'id',
+            'username',
+            'email',
+            'first_name',
+            'last_name',
+            'total_cars_created',
+        )
 
 
 class CustomUserCreateSerializer(serializers.ModelSerializer):

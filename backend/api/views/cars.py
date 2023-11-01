@@ -1,5 +1,6 @@
-from django_filters import rest_framework as filters
+from django.db.models import Sum
 from django.utils.decorators import method_decorator
+from django_filters import rest_framework as filters
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import permissions, viewsets
 
@@ -34,6 +35,8 @@ class CarsViewSet(viewsets.ReadOnlyModelViewSet):
         'car_body__type',
         'vin_code',
         'creation_date',
+    ).annotate(
+        total_components_cnt=Sum('car_components__amount'),
     )
     serializer_class = CarSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
@@ -46,13 +49,13 @@ class CarsViewSet(viewsets.ReadOnlyModelViewSet):
     tags=['Комплектующие'],
 ))
 @method_decorator(name='retrieve', decorator=swagger_auto_schema(
-    operation_description='Выдача конкретной детали по ID',
+    operation_description='Выдача детали по ID',
     tags=['Комплектующие'],
 ))
 class ComponentsViewSet(viewsets.ReadOnlyModelViewSet):
     """Представление деталей."""
 
-    queryset = Components.objects.all()
+    queryset = Components.objects.all().order_by('name')
     serializer_class = ComponentsSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     filter_backends = (filters.DjangoFilterBackend, )
