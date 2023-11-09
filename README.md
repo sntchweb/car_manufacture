@@ -15,6 +15,28 @@
 * Установите Docker desktop.
 * Клонируйте репозиторий командой:  
 `git clone git@github.com:sntchweb/car_manufacture.git`
+* Создайте `.env` файл в директории /manufacture. Пример `.env` файла:
+```bash
+# SETTINGS
+SECRET_KEY='django-insecure-q&o#d&f$!j4@ngynaj@-esb18!ejdejve1uf7fg302crjgyok)'
+DEBUG='True'
+ALLOWED_HOSTS='backend 127.0.0.1 localhost'
+
+# E-MAIL CONST
+EMAIL_HOST_USER='your_email'
+EMAIL_HOST_PASSWORD='app_password'
+
+# DATABASE
+POSTGRES_DB=django
+POSTGRES_USER=django
+POSTGRES_PASSWORD=django
+DB_NAME=django
+DB_HOST=database
+DB_PORT=5432
+
+#CELERY
+CELERY_BROKER_URL='redis://redis:6379/1'
+```
 * Откройте терминал и запустите сборку и запуск docker-контейнеров командой из корневой директории:  
 `docker-compose up --build`
 
