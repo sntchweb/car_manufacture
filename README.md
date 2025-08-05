@@ -89,7 +89,7 @@ http://127.0.0.1:8000/api/v1/docs/swagger/
 
 Ответ:  
 {
-	"count": 5,
+	"count": 3,
 	"next": null,
 	"previous": null,
 	"results": [
