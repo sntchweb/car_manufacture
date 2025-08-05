@@ -11,7 +11,7 @@ class CarComponentsInline(admin.TabularInline):
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
     list_display = ('id', 'vin', 'employee', 'car_body', 'creation_date')
-    search_fields = ('vin', 'employee__first_name', 'employee__last_name')
+    search_fields = ('employee__first_name', 'employee__last_name')
     list_filter = ('car_body', 'employee__first_name', 'employee__last_name')
     inlines = [CarComponentsInline]
 

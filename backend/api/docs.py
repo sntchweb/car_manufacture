@@ -10,7 +10,7 @@ schema_view = get_schema_view(
         description='Документация для Cars manufacture',
     ),
     public=True,
-    permission_classes=(permissions.AllowAny,),
+    permission_classes=[permissions.AllowAny],
 )
 
 urlpatterns = [

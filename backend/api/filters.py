@@ -8,17 +8,15 @@ from users.models import CustomUser
 class UsersFilter(filters.FilterSet):
     """Фильтр для пользователей."""
 
-    email = filters.CharFilter(method='get_email')
-    username = filters.CharFilter(method='get_username')
+    email = filters.CharFilter(method="get_email")
+    username = filters.CharFilter(method="get_username")
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'email')
+        fields = ("username", "email")
 
     def get_email(self, qs, name, value):
-        return qs.filter(
-            Q(email__istartswith=value) | Q(email__icontains=value)
-        )
+        return qs.filter(Q(email__icontains=value))
 
     def get_username(self, qs, name, value):
         return qs.filter(
@@ -30,16 +28,16 @@ class ComponentsFilter(filters.FilterSet):
     """Фильтр для деталей."""
 
     name = filters.CharFilter(
-        method='get_name',
+        method="get_name",
     )
     manufacturer_country = filters.CharFilter(
-        field_name='manufacturer_country',
-        lookup_expr='istartswith',
+        field_name="manufacturer_country",
+        lookup_expr="icontains",
     )
 
     class Meta:
         model = Components
-        fields = ('name', 'manufacturer_country')
+        fields = ("name", "manufacturer_country")
 
     def get_name(self, qs, name, value):
         return qs.filter(
@@ -51,42 +49,42 @@ class CarsFilter(filters.FilterSet):
     """Фильтр для автомобилей."""
 
     employee_first_name = filters.CharFilter(
-        field_name='employee__first_name',
-        lookup_expr='istartswith',
+        field_name="employee__first_name",
+        lookup_expr="istartswith",
     )
     employee_last_name = filters.CharFilter(
-        field_name='employee__last_name',
-        lookup_expr='istartswith',
+        field_name="employee__last_name",
+        lookup_expr="icontains",
     )
     creation_date = filters.NumberFilter(
-        field_name='creation_date',
-        lookup_expr='year__exact',
+        field_name="creation_date",
+        lookup_expr="year__exact",
     )
-    creation_date_gt = filters.NumberFilter(
-        field_name='creation_date',
-        lookup_expr='year__gte',
+    creation_year_gt = filters.NumberFilter(
+        field_name="creation_date",
+        lookup_expr="year__gte",
     )
-    creation_date_lt = filters.NumberFilter(
-        field_name='creation_date',
-        lookup_expr='year__lte',
+    creation_year_lt = filters.NumberFilter(
+        field_name="creation_date",
+        lookup_expr="year__lte",
     )
     body_type = filters.CharFilter(
-        field_name='car_body__type',
-        lookup_expr='istartswith',
+        field_name="car_body__type",
+        lookup_expr="icontains",
     )
     color = filters.CharFilter(
-        field_name='car_body__color',
-        lookup_expr='istartswith',
+        field_name="car_body__color",
+        lookup_expr="icontains",
     )
 
     class Meta:
         model = Car
         fields = (
-            'employee_first_name',
-            'employee_last_name',
-            'creation_date',
-            'creation_date_gt',
-            'creation_date_lt',
-            'body_type',
-            'color',
+            "employee_first_name",
+            "employee_last_name",
+            "creation_date",
+            "creation_year_gt",
+            "creation_year_lt",
+            "body_type",
+            "color",
         )
