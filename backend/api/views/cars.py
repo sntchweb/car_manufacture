@@ -3,6 +3,8 @@ from django.utils.decorators import method_decorator
 from django_filters import rest_framework as filters
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import permissions, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from api.filters import CarsFilter, ComponentsFilter
 from api.serializers.cars import CarSerializer, ComponentsSerializer
@@ -48,6 +50,25 @@ class CarsViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = CarsFilter
+
+    @method_decorator(
+        name="retrieve",
+        decorator=swagger_auto_schema(
+            operation_description="Выдача информации о последних собранных автомобилях (5 по умолчанию)",
+            tags=["Автомобили"],
+        ),
+    )
+    @action(
+        methods=("get",),
+        detail=False,
+        url_path="last_created_cars",
+        permission_classes=(permissions.IsAuthenticatedOrReadOnly,),
+    )
+    def last_created_cars(self, request):
+        limit = int(request.query_params.get("limit", 5))
+        cars = self.queryset.order_by("-creation_date")[:limit]
+        serializer = self.get_serializer(cars, many=True)
+        return Response(serializer.data)
 
 
 @method_decorator(
