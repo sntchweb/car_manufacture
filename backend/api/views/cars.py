@@ -45,6 +45,7 @@ class CarsViewSet(viewsets.ReadOnlyModelViewSet):
         .annotate(
             total_components_cnt=Sum("car_components__amount"),
         )
+        .order_by("-creation_date")
     )
     serializer_class = CarSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
@@ -62,13 +63,13 @@ class CarsViewSet(viewsets.ReadOnlyModelViewSet):
         methods=("get",),
         detail=False,
         url_path="last_created_cars",
+        filter_backends=(),
         permission_classes=(permissions.IsAuthenticatedOrReadOnly,),
     )
     def last_created_cars(self, request):
-        limit = int(request.query_params.get("limit", 5))
-        cars = self.queryset.order_by("-creation_date")[:limit]
-        serializer = self.get_serializer(cars, many=True)
-        return Response(serializer.data)
+        cars = self.get_queryset().order_by("-creation_date")[:5]
+        # cars = self.get_queryset()[:5]
+        return Response(self.get_serializer(cars, many=True).data)
 
 
 @method_decorator(

@@ -39,9 +39,7 @@ class CarSerializer(serializers.ModelSerializer):
     employee = UserSerializer(read_only=True)
     vin_code = serializers.SerializerMethodField(source="get_vin_code")
     car_body = CarBodySerializer(read_only=True)
-    creation_date = serializers.SerializerMethodField(
-        source="get_creation_date",
-    )
+    creation_date = serializers.DateTimeField(format="%d-%m-%Y")
     components = ComponentsInCarSerializer(
         many=True,
         read_only=True,
@@ -61,12 +59,7 @@ class CarSerializer(serializers.ModelSerializer):
             "employee",
         )
 
-    def get_creation_date(self, obj):
-        """Возвращает дату сборки автомобиля в формате ГГГГ-ММ-ДД."""
-
-        return obj.creation_date.strftime("%Y-%m-%d")
-
     def get_vin_code(self, obj):
         """Возвращает VIN-код автомобиля."""
 
-        return "".join(str(obj.vin_code).split("-")).upper()
+        return str(obj.vin_code).replace("-", "").upper()

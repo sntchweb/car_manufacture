@@ -60,11 +60,11 @@ class CarsFilter(filters.FilterSet):
         field_name="creation_date",
         lookup_expr="year__exact",
     )
-    creation_year_gt = filters.NumberFilter(
+    creation_year_gte = filters.NumberFilter(
         field_name="creation_date",
         lookup_expr="year__gte",
     )
-    creation_year_lt = filters.NumberFilter(
+    creation_year_lte = filters.NumberFilter(
         field_name="creation_date",
         lookup_expr="year__lte",
     )
@@ -83,8 +83,8 @@ class CarsFilter(filters.FilterSet):
             "employee_first_name",
             "employee_last_name",
             "creation_date",
-            "creation_year_gt",
-            "creation_year_lt",
+            "creation_year_gte",
+            "creation_year_lte",
             "body_type",
             "color",
         )
